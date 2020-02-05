@@ -43,6 +43,11 @@ class EMChatManager {
          message.msgId = EMMessage.from(response['message']).msgId;
          message.status = EMMessage.from(response['message']).status;
         if (onSuccess != null) onSuccess();
+      } else {
+        print("消息发送：" + response["success"].toString());
+        if (onError != null) {
+          onError(response['code'], response['desc']);
+        }
       }
     });
   }
@@ -50,7 +55,6 @@ class EMChatManager {
 
   void _addNativeMethodCallHandler() {
     _emChatManagerChannel.setMethodCallHandler((MethodCall call) {
-      print("${call.method}----------------------------------------");
       Map argMap = call.arguments;
       if (call.method == EMSDKMethod.onMessageReceived) {
         return _onMessageReceived(argMap);

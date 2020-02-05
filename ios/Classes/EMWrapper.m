@@ -24,6 +24,14 @@
     return self;
 }
 
+- (void)registerApns{
+
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings {
+    [application registerForRemoteNotifications];
+}
+
 - (void)wrapperCallBack:(FlutterResult)result
                   error:(EMError *__nullable)error
                userInfo:(NSDictionary *__nullable)userInfo {
