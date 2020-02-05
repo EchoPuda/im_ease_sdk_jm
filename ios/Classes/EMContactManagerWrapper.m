@@ -95,13 +95,18 @@
 - (void)addUserToBlackList:(NSDictionary *)param result:(FlutterResult)result {
     __weak typeof(self)weakSelf = self;
     NSString *userName = param[@"userName"];
-    [EMClient.sharedClient.contactManager addUserToBlackList:userName
-                                                  completion:^(NSString *aUsername, EMError *aError)
-     {
-        [weakSelf wrapperCallBack:result
+    BOOL relationshipBoth = [param[@"both"] boolValue];
+    EMError *aError = [EMClient.sharedClient.contactManager addUserToBlackList:userName relationshipBoth:relationshipBoth];
+    [weakSelf wrapperCallBack:result
                         error:aError
-                         userInfo:@{@"value":aUsername}];
-    }];
+                        userInfo:@{@"value":userName}];
+//    [EMClient.sharedClient.contactManager addUserToBlackList:userName
+//                                                  completion:^(NSString *aUsername, EMError *aError)
+//     {
+//        [weakSelf wrapperCallBack:result
+//                        error:aError
+//                         userInfo:@{@"value":aUsername}];
+//    }];
 }
 
 - (void)removeUserFromBlackList:(NSDictionary *)param result:(FlutterResult)result {
