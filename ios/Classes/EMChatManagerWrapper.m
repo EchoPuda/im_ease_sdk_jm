@@ -186,7 +186,14 @@
 
 // TODO: 目前这种方式实现后，消息id不一致，考虑如何处理。
 - (void)updateChatMessage:(NSDictionary *)param result:(FlutterResult)result {
-    
+    __weak typeof(self)weakSelf = self;
+    EMMessage *msg = [EMHelper dictionaryToMessage:param];
+    [EMClient.sharedClient.chatManager updateMessage:msg completion:^(EMMessage *aMessage, EMError *aError)
+     {
+        [weakSelf wrapperCallBack:result
+                            error:aError
+                         userInfo:@{@"status" : [NSNumber numberWithBool:(aError == nil)]}];
+    }];
 }
 
 - (void)downloadAttachment:(NSDictionary *)param result:(FlutterResult)result {
