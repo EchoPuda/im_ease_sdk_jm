@@ -281,7 +281,7 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
         } else if (EMSDKMethod.getMessage.equals(call.method)) {
             getMessage(call.arguments, result);
         }else if(EMSDKMethod.getConversation.equals(call.method)) {
-            getConversation(call.arguments, result);
+            loadMessages(call.arguments, result);
         }else if(EMSDKMethod.markAllChatMsgAsRead.equals(call.method)) {
             markAllConversationsAsRead(call.arguments, result);
         }else if(EMSDKMethod.getUnreadMessageCount.equals(call.method)) {
@@ -696,20 +696,34 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
         }
     }
 
-    private void getConversation(Object args, Result result) {
+    private void loadMessages(Object args, Result result) {
         try {
-            JSONObject argMap = (JSONObject)args;
-            String conversationId = argMap.getString("id");
-            EMConversation.EMConversationType type = EMHelper.convertIntToEMConversationType(argMap.getInt("type"));
-            Boolean createIfNotExists = argMap.getBoolean("createIfNotExists");
-            EMConversation conversation = manager.getConversation(conversationId, type, createIfNotExists);
+            JSONObject argMap = (JSONObject) args;
+            String id = argMap.getString("id");
+            JSONArray json_msgIds = argMap.getJSONArray("messages");
+            List<String> msgIds = new ArrayList<>();
+            for(int i = 0; i < json_msgIds.length(); i++){
+                msgIds.add(json_msgIds.getString(i));
+            }
+            List<EMMessage> list = getConversation(id).loadMessages(msgIds);
+            List<Map<String, Object>> messages = new LinkedList<Map<String, Object>>();
+//            list.forEach(message->{
+//                messages.add(EMHelper.convertEMMessageToStringMap(message));
+//            });
+            for (EMMessage message : list) {
+                messages.add(EMHelper.convertEMMessageToStringMap(message));
+            }
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("success", Boolean.TRUE);
-            data.put("conversation", EMHelper.convertEMConversationToStringMap(conversation));
+            data.put("messages", messages);
             result.success(data);
         }catch (JSONException e){
             EMLog.e("JSONException", e.getMessage());
         }
+    }
+
+    private EMConversation getConversation(String id) {
+        return manager.getConversation(id);
     }
 
     private void markAllConversationsAsRead(Object args, Result result) {
@@ -731,13 +745,14 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
     }
 
     private void updateMessage(Object args, Result result) {
-        JSONObject argMap = (JSONObject)args;
-        EMMessage message = EMHelper.convertDataMapToMessage(argMap);
-        boolean status = manager.updateMessage(message);
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("success", Boolean.TRUE);
-        data.put("status", Boolean.valueOf(status));
-        result.success(data);
+        try {
+            JSONObject argMap = (JSONObject) args;
+            String id = argMap.getString("id");
+            EMMessage message = EMHelper.convertDataMapToMessage((JSONObject)argMap.get("msg"));
+            getConversation(id).updateMessage(message);
+        }catch (JSONException e){
+            EMLog.e("JSONException", e.getMessage());
+        }
     }
 
     private void downloadAttachment(Object args, Result result) {
