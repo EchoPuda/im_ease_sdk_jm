@@ -371,10 +371,10 @@ class EMMessage {
   /// 创建文本类型消息 [content]: 消息内容; [userName]: 接收方id
   EMMessage.createTxtSendMessage(String content, String userName)
       : this(
-            direction: Direction.SEND,
-            to: userName,
-            type: EMMessageType.TXT,
-            body: EMTextMessageBody(content));
+      direction: Direction.SEND,
+      to: userName,
+      type: EMMessageType.TXT,
+      body: EMTextMessageBody(content));
 
   /// 创建语音类型消息 [filePath]: 语音片断路径;  [timeLength]: 语音时长; [userName]: 接收方id
   EMMessage.createVoiceSendMessage(
@@ -385,36 +385,36 @@ class EMMessage {
   EMMessage.createImageSendMessage(
       String filePath, bool sendOriginalImage, String userName)
       : this(
-            direction: Direction.SEND,
-            type: EMMessageType.IMAGE,
-            body: EMImageMessageBody(File(filePath), sendOriginalImage),
-            to: userName);
+      direction: Direction.SEND,
+      type: EMMessageType.IMAGE,
+      body: EMImageMessageBody(File(filePath), sendOriginalImage),
+      to: userName);
 
   /// 创建视频类型消息 [filePath]: 视频片断路径;  [timeLength]: 语音时长; [userName]: 接收方id
   EMMessage.createVideoSendMessage(
       String filePath, int timeLength, String userName)
       : this(
-            direction: Direction.SEND,
-            type: EMMessageType.VIDEO,
-            body: EMVideoMessageBody(File(filePath), timeLength),
-            to: userName);
+      direction: Direction.SEND,
+      type: EMMessageType.VIDEO,
+      body: EMVideoMessageBody(File(filePath), timeLength),
+      to: userName);
 
   /// 创建位置类型消息 [latitude]: 纬度; [longitude]: 经度; [locationAddress]: 位置名称; [userName]: 接收方id
   EMMessage.createLocationSendMessage(double latitude, double longitude,
       String locationAddress, String userName)
       : this(
-            direction: Direction.SEND,
-            type: EMMessageType.LOCATION,
-            body: EMLocationMessageBody(locationAddress, latitude, longitude),
-            to: userName);
+      direction: Direction.SEND,
+      type: EMMessageType.LOCATION,
+      body: EMLocationMessageBody(locationAddress, latitude, longitude),
+      to: userName);
 
   /// 创建文件类型消息 [filePath]: 文件路径; [userName]: 接收方id
   EMMessage.createFileSendMessage(String filePath, String userName)
       : this(
-            direction: Direction.SEND,
-            type: EMMessageType.FILE,
-            body: EMNormalFileMessageBody(File(filePath)),
-            to: userName);
+      direction: Direction.SEND,
+      type: EMMessageType.FILE,
+      body: EMNormalFileMessageBody(File(filePath)),
+      to: userName);
 
   /// @nodoc TODO:
   set isDeliverAcked(bool acked) {
@@ -480,15 +480,12 @@ class EMMessage {
   final Map _attributes;
 
   /// @nodoc
-  void setAttribute(String attr, dynamic value) {
-    _attributes[attr] = value;
+  void setAttribute(Map map) {
+    _attributes.addAll(map);
   }
 
   /// @nodoc
   dynamic getAttribute(String attr) {
-    if (_attributes == null) {
-      return null;
-    }
     return _attributes[attr];
   }
 
