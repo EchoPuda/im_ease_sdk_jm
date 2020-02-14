@@ -732,12 +732,21 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
 
     private void updateMessage(Object args, Result result) {
         JSONObject argMap = (JSONObject)args;
-        EMMessage message = EMHelper.convertDataMapToMessage(argMap);
-        boolean status = manager.updateMessage(message);
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put("success", Boolean.TRUE);
-        data.put("status", Boolean.valueOf(status));
-        result.success(data);
+        Map<String, Object> data = new HashMap<>();
+        try {
+            EMMessage message = EMHelper.updateDataMapToMessage(argMap.getJSONObject("message"));
+
+            if (message != null) {
+                boolean status = EMClient.getInstance().chatManager().updateMessage(message);
+                data.put("status", status);
+            } else {
+                data.put("status", false);
+            }
+            data.put("success", Boolean.TRUE);
+            result.success(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void downloadAttachment(Object args, Result result) {

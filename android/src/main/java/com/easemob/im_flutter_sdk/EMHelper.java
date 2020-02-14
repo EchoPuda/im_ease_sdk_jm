@@ -55,8 +55,10 @@ class EMHelper {
         try {
             EMLog.d("convertDataMapToMessage", args.toString());
 
-            int data_type = Integer.parseInt(args.getString("type"));
-            int data_chatType = Integer.parseInt(args.getString("chatType"));
+            int data_type =args.getInt("type");
+            int data_chatType = args.getInt("chatType");
+
+
             emChatType = EMMessage.ChatType.Chat;
             intToChatType(data_chatType);
 
@@ -143,6 +145,29 @@ class EMHelper {
                 message.setMsgId(args.getString("msgId"));
             }
         }catch(Exception e){
+            e.printStackTrace();
+        }
+        return message;
+    }
+
+    static EMMessage updateDataMapToMessage(JSONObject args){
+        EMMessage message = null;
+        try {
+            String msgid = args.getString("msgId");
+            message = EMClient.getInstance().chatManager().getMessage(msgid);
+            if(message == null){
+                EMLog.e("EMHelper","Message is null object");
+                return null;
+            }
+            message.setAcked(args.getBoolean("acked"));
+            message.setDeliverAcked(args.getBoolean("deliverAcked"));
+            message.setDelivered(args.getBoolean("delivered"));
+            message.setListened(args.getBoolean("listened"));
+            message.setLocalTime(Long.valueOf(args.getString("localTime")));
+            message.setMsgTime(Long.valueOf(args.getString("msgTime")));
+            message.setUnread(args.getBoolean("unread"));
+            setExt(args,message);
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         return message;
@@ -341,9 +366,12 @@ class EMHelper {
         chatRoomMap.put("blackList",emChatRoom.getBlackList());
         if (emChatRoom.getMuteList() != null && emChatRoom.getMuteList().size() > 0) {
             List list = new LinkedList();
-            emChatRoom.getMuteList().forEach((k, v) ->{
-                list.add(k);
-            });
+//            emChatRoom.getMuteList().forEach((k, v) ->{
+//                list.add(k);
+//            });
+            for (Map.Entry<String, Long> m :  emChatRoom.getMuteList().entrySet()){
+                list.add(m.getKey());
+            }
             chatRoomMap.put("muteList",list);
         }
         chatRoomMap.put("announcement",emChatRoom.getAnnouncement());
