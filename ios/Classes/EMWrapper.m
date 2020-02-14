@@ -1,6 +1,6 @@
 //
 //  EMWrapper.m
-//  
+//
 //
 //  Created by 杜洁鹏 on 2019/10/8.
 //
@@ -22,14 +22,6 @@
         [registrar addMethodCallDelegate:self channel:channel];
     }
     return self;
-}
-
-- (void)registerApns{
-
-}
-
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(nonnull UIUserNotificationSettings *)notificationSettings {
-    [application registerForRemoteNotifications];
 }
 
 - (void)wrapperCallBack:(FlutterResult)result

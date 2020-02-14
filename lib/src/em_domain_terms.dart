@@ -486,6 +486,9 @@ class EMMessage {
 
   /// @nodoc
   dynamic getAttribute(String attr) {
+    if (_attributes == null) {
+      return null;
+    }
     return _attributes[attr];
   }
 
