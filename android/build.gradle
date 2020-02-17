@@ -56,4 +56,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-base:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.hyphenate:hyphenate-sdk:3.6.1'
+
+    implementation 'cn.jiguang.sdk:jpush:3.3.4'
+    implementation 'cn.jiguang.sdk:jcore:2.1.2'
 }
