@@ -283,7 +283,7 @@
                         completion:^(EMConversation *conversation)
     {
         NSDictionary *msgDict = param[@"msg"];
-        [conversation updateMessageChange:[EMHelper dictionaryToMessage:msgDict]
+        [conversation updateMessageChange:[EMHelper updateDataMapToMessage:msgDict]
                               error:nil];
     }];
 }

@@ -179,6 +179,26 @@
     return ret;
 }
 
++ (EMMessage *)updateDataMapToMessage:(NSDictionary *)args {
+    EMMessage *aMessage = nil;
+    NSString *msgid = args[@"msgId"];
+    aMessage = [[EMClient sharedClient].chatManager getMessageWithMessageId:msgid];
+    if (aMessage == nil) {
+        NSLog(@"EMHelper---> Message is null object");
+        return nil;
+    }
+    aMessage.isReadAcked = [args[@"acked"] boolValue];
+    aMessage.isDeliverAcked = [args[@"deliverAcked"] boolValue];
+    aMessage.localTime = [args[@"localTime"] longLongValue];
+    aMessage.timestamp = [args[@"msgTime"] longLongValue];
+    aMessage.isRead = [args[@"unread"] boolValue] ? false : true;
+    if (args[@"attributes"] != nil) {
+        NSDictionary *data = args[@"attributes"];
+        aMessage.ext = data;
+    }
+    return aMessage;
+}
+
 + (NSDictionary *)messageToDictionary:(EMMessage *)aMessage {
 
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];

@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (EMMessage *)dictionaryToMessage:(NSDictionary *)aDictionary;
 
++ (EMMessage *)updateDataMapToMessage:(NSDictionary *)args;
+
 + (NSDictionary *)messageToDictionary:(EMMessage *)aMessage;
 
 + (NSArray *)dictionariesToMessages:(NSArray *)dicts;
