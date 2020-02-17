@@ -150,7 +150,30 @@ class EMHelper {
         return message;
     }
 
-    static EMMessage updateDataMapToMessage(JSONObject args){
+    static boolean updateDataMapToMessage(JSONObject args){
+        EMMessage message = null;
+        try {
+            String msgid = args.getString("msgId");
+            message = EMClient.getInstance().chatManager().getMessage(msgid);
+            if(message == null){
+                EMLog.e("EMHelper","Message is null object");
+                return false;
+            }
+            message.setAcked(args.getBoolean("acked"));
+            message.setDeliverAcked(args.getBoolean("deliverAcked"));
+            message.setDelivered(args.getBoolean("delivered"));
+            message.setListened(args.getBoolean("listened"));
+            message.setLocalTime(Long.valueOf(args.getString("localTime")));
+            message.setMsgTime(Long.valueOf(args.getString("msgTime")));
+            message.setUnread(args.getBoolean("unread"));
+            setExt(args,message);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return EMClient.getInstance().chatManager().updateMessage(message);
+    }
+
+    static EMMessage convertUpdateDataMapToMessage(JSONObject args){
         EMMessage message = null;
         try {
             String msgid = args.getString("msgId");
