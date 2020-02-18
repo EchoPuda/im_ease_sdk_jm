@@ -18,12 +18,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.easemob.video.VideoCallActivity;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.util.EMLog;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CallReceiver extends BroadcastReceiver implements EMWrapper {
+
+	Context aContext;
+
+	CallReceiver(Context context) {
+		this.aContext = context;
+	}
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -34,12 +42,25 @@ public class CallReceiver extends BroadcastReceiver implements EMWrapper {
 		//call type
 		String type = intent.getStringExtra("type");
 		Map<String, Object> data = new HashMap<String, Object>();
-		data.put("from",from);
-		//video call
-		post((Void)->{
-			EMChatManagerWrapper.channel.invokeMethod("onCallReceive",data);
-		});
-		EMLog.d("CallReceiver", "app received a incoming call");
+		System.out.println("type: " + type);
+		if ("VIDEO".equals(type)) {
+
+			// 跳转至视频通话页面
+			Intent newIntent = new Intent()
+					.setClass(aContext, VideoCallActivity.class)
+					.putExtra("username", from).putExtra("type", "call");
+
+			aContext.startActivity(newIntent);
+
+		} else {
+			data.put("from",from);
+			//video call
+			post((Void)->{
+				EMChatManagerWrapper.channel.invokeMethod("onCallReceive",data);
+			});
+			EMLog.d("CallReceiver", "app received a incoming call");
+		}
+
 	}
 
 }

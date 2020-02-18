@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:im_flutter_sdk/src/em_call_manager_v.dart';
 import 'package:im_flutter_sdk/src/em_push_manager.dart';
 
 import 'em_chat_manager.dart';
@@ -25,6 +26,8 @@ class EMClient {
   final EMGroupManager _groupManager = EMGroupManager.getInstance();
 
   final EMPushManager _pushManager = EMPushManager();
+
+  final EMCallManagerVideo _callManagerVideo = EMCallManagerVideo.getInstance();
 
   final _connectionListeners = List<EMConnectionListener>();
   final _multiDeviceListeners = List<EMMultiDeviceListener>();
@@ -380,6 +383,11 @@ class EMClient {
   /// @nodoc  pushManager - retrieve [EMPushManager] handle.
   EMPushManager pushManager() {
     return _pushManager;
+  }
+
+  /// 视频通话管理
+  EMCallManagerVideo callManagerVideo() {
+    return _callManagerVideo;
   }
 
   /// @nodoc

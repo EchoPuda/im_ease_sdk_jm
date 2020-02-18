@@ -34,6 +34,11 @@ android {
     defaultConfig {
         minSdkVersion 17
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        manifestPlaceholders = [
+//                JPUSH_PKGNAME: "com.ewhale.partner_social",
+//                JPUSH_APPKEY : "00cdf2abf344a7543e70e041", //JPush上注册的包名对应的appkey.
+//                JPUSH_CHANNEL: "developer-default",
+//        ]
     }
 
     //自3.6.0开始需要java8的支持
@@ -57,6 +62,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.hyphenate:hyphenate-sdk:3.6.1'
 
-    implementation 'cn.jiguang.sdk:jpush:3.3.4'
-    implementation 'cn.jiguang.sdk:jcore:2.1.2'
+//    implementation 'cn.jiguang.sdk:jpush:3.3.4'
+//    implementation 'cn.jiguang.sdk:jcore:2.1.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
