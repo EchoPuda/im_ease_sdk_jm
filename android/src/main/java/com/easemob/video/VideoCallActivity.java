@@ -241,7 +241,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
                         if (lReceive.getVisibility() == View.VISIBLE) {
                             lReceive.setVisibility(View.GONE);
                         }
-                        lCalling.setVisibility(View.VISIBLE);
+                        lCalling.setVisibility(View.GONE);
                         handTip.setText("");
 
                         openSpeakerOn();
