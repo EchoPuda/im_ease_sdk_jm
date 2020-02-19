@@ -173,7 +173,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
      * 连通视频
      */
     void connectSurface() {
-        this.runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
@@ -194,6 +194,15 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         },500);
     }
 
+    void setTip(String tip) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                handTip.setText(tip);
+            }
+        });
+    }
+
     @Override
     public void onCallStateChanged(CallState callState, CallError error) {
         switch (callState) {
@@ -206,29 +215,34 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
 
             case ACCEPTED: // 电话接通成功
 
-                if (lReceive.getVisibility() == View.VISIBLE) {
-                    lReceive.setVisibility(View.GONE);
-                }
-                lCalling.setVisibility(View.VISIBLE);
-                handTip.setText("");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (lReceive.getVisibility() == View.VISIBLE) {
+                            lReceive.setVisibility(View.GONE);
+                        }
+                        lCalling.setVisibility(View.VISIBLE);
+                        handTip.setText("");
 
-                openSpeakerOn();
-                connectSurface();
+                        openSpeakerOn();
+                        connectSurface();
+                    }
+                });
 
                 break;
             case DISCONNECTED: // 电话断了
                 if(error == CallError.ERROR_UNAVAILABLE){
                     // 对方不在线
-                    handTip.setText("对方不在线");
+                    setTip("对方不在线");
                     finishVideo();
                 } else if (error == CallError.ERROR_BUSY) {
-                    handTip.setText("对方正忙");
+                    setTip("对方正忙");
                     finishVideo();
                 } else if (error == CallError.REJECTED) {
-                    handTip.setText("对方拒绝接听");
+                    setTip("对方拒绝接听");
                     finishVideo();
                 } else {
-                    handTip.setText("通话已结束");
+                    setTip("通话已结束");
                     finishVideo();
                 }
                 break;
