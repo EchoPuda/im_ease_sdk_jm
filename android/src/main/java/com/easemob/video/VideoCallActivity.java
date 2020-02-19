@@ -140,6 +140,9 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
 
     }
 
+    /**
+     * 打开扬声器
+     */
     private void openSpeakerOn() {
         try {
             if (!audioManager.isSpeakerphoneOn()) {
@@ -166,10 +169,22 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         }
     }
 
+    /**
+     * 连通视频
+     */
     void connectSurface() {
-        EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
+            }
+        });
+
     }
 
+    /**
+     * 结束视频通话
+     */
     void finishVideo() {
         new Handler().postDelayed(new Runnable() {
             @Override

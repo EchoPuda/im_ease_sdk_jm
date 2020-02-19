@@ -225,24 +225,24 @@ class LoginPageState extends State<LoginPage> {
           ),
         ),
 
-        /// 登录按钮
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 33.0),
-          width: double.infinity,
-          height: 50.0,
-          child: RaisedButton(
-            padding: EdgeInsets.all(12.0),
-            shape: StadiumBorder(),
-            child: Text(
-              "test Video call",
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            onPressed: () {
-              EMClient.getInstance().callManagerVideo().startVideoCall("");
-            },
-          ),
-        ),
+//        /// 登录按钮
+//        Container(
+//          padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 33.0),
+//          width: double.infinity,
+//          height: 50.0,
+//          child: RaisedButton(
+//            padding: EdgeInsets.all(12.0),
+//            shape: StadiumBorder(),
+//            child: Text(
+//              "test Video call",
+//              style: TextStyle(color: Colors.white, fontSize: 16.0),
+//            ),
+//            color: Color.fromRGBO(0, 0, 0, 0.1),
+//            onPressed: () {
+//              EMClient.getInstance().callManagerVideo().startVideoCall("");
+//            },
+//          ),
+//        ),
       ],
     ),
   );
