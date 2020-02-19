@@ -145,7 +145,7 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
 
         IntentFilter callFilter = new IntentFilter(callManager.getIncomingCallBroadcastAction());
         if(callReceiver == null){
-            callReceiver = new CallReceiver(registrar.context());
+            callReceiver = new CallReceiver(registrar.activity());
         }
         registrar.context().registerReceiver(callReceiver, callFilter);
 
@@ -362,7 +362,7 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
         Log.d(TAG, "addCallReceiverChangeListener: ---------------------------------------");
         IntentFilter callFilter = new IntentFilter(callManager.getIncomingCallBroadcastAction());
         if(callReceiver == null){
-            callReceiver = new CallReceiver(registrar.context());
+            callReceiver = new CallReceiver(registrar.activity());
         }
         registrar.context().registerReceiver(callReceiver, callFilter);
     }

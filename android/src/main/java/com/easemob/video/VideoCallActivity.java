@@ -70,9 +70,11 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
             handTip.setText("对方请求与您视频通话...");
         }
 
+        setPicture();
+
         connectSurface();
 
-        setPicture();
+
 
     }
 

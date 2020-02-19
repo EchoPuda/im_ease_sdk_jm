@@ -14,6 +14,7 @@
 
 package com.easemob.im_flutter_sdk;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +28,10 @@ import java.util.Map;
 
 public class CallReceiver extends BroadcastReceiver implements EMWrapper {
 
-	Context aContext;
+	Activity aActivity;
 
-	CallReceiver(Context context) {
-		this.aContext = context;
+	CallReceiver(Activity activity) {
+		this.aActivity = activity;
 	}
 
 	@Override
@@ -47,10 +48,10 @@ public class CallReceiver extends BroadcastReceiver implements EMWrapper {
 
 			// 跳转至视频通话页面
 			Intent newIntent = new Intent()
-					.setClass(aContext, VideoCallActivity.class)
+					.setClass(aActivity, VideoCallActivity.class)
 					.putExtra("username", from).putExtra("type", "call");
 
-			aContext.startActivity(newIntent);
+			aActivity.startActivity(newIntent);
 
 		} else {
 			data.put("from",from);
