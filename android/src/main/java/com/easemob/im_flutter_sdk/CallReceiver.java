@@ -49,7 +49,7 @@ public class CallReceiver extends BroadcastReceiver implements EMWrapper {
 			// 跳转至视频通话页面
 			Intent newIntent = new Intent()
 					.setClass(aActivity, VideoCallActivity.class)
-					.putExtra("username", from).putExtra("type", "call");
+					.putExtra("username", from).putExtra("type", "receive");
 
 			aActivity.startActivity(newIntent);
 

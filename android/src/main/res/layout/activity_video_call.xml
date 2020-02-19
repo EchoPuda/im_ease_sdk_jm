@@ -19,7 +19,7 @@
             >
 
             <com.hyphenate.media.EMCallSurfaceView
-                android:id="@+id/localSurface"
+                android:id="@+id/oppositeSurface"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -35,7 +35,7 @@
             >
 
             <com.hyphenate.media.EMCallSurfaceView
-                android:id="@+id/oppositeSurface"
+                android:id="@+id/localSurface"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
