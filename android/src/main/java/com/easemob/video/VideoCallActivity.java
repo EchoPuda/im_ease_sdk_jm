@@ -163,7 +163,9 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
-        EMClient.getInstance().callManager().getCallOptions().setVideoResolution(dm.widthPixels,dm.heightPixels);
+        System.out.println("width:" + dm.widthPixels);
+        System.out.println("width:" + dm.heightPixels);
+        EMClient.getInstance().callManager().getCallOptions().setVideoResolution(640,1080);
     }
 
     /**
@@ -241,7 +243,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
                         if (lReceive.getVisibility() == View.VISIBLE) {
                             lReceive.setVisibility(View.GONE);
                         }
-                        lCalling.setVisibility(View.GONE);
+                        lCalling.setVisibility(View.VISIBLE);
                         handTip.setText("");
 
                         openSpeakerOn();
