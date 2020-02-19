@@ -107,12 +107,14 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         //静音
         handMute.setOnClickListener(view -> {
             try {
-                if (isMute) {
+                if (!isMute) {
                     EMClient.getInstance().callManager().pauseVoiceTransfer();
                     handMute.setImageResource(R.drawable.em_call_mic_off);
+                    isMute = true;
                 } else {
                     EMClient.getInstance().callManager().resumeVoiceTransfer();
                     handMute.setImageResource(R.drawable.em_call_mic_on);
+                    isMute = false;
                 }
 
             } catch (HyphenateException e) {
