@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -65,6 +67,10 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
             lCalling.setVisibility(View.GONE);
             handTip.setText("对方请求与您视频通话...");
         }
+
+        connectSurface();
+
+        setPicture();
 
     }
 
@@ -140,6 +146,13 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
 
     }
 
+    void setPicture() {
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        EMClient.getInstance().callManager().getCallOptions().setVideoResolution(dm.widthPixels,dm.heightPixels);
+    }
+
     /**
      * 打开扬声器
      */
@@ -173,13 +186,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
      * 连通视频
      */
     void connectSurface() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
-            }
-        });
-
+        EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
     }
 
     /**
@@ -225,7 +232,6 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
                         handTip.setText("");
 
                         openSpeakerOn();
-                        connectSurface();
                     }
                 });
 

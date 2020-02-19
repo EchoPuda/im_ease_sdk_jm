@@ -27,10 +27,11 @@
 
         <LinearLayout
             android:layout_width="100dp"
-            android:layout_height="170dp"
+            android:layout_height="100dp"
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:background="#333333"
             >
 
             <com.hyphenate.media.EMCallSurfaceView
@@ -57,6 +58,7 @@
             android:layout_gravity="bottom"
             android:orientation="vertical"
             android:visibility="gone"
+            android:background="#00000000"
             >
 
             <LinearLayout
@@ -66,6 +68,7 @@
                 android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
+                android:background="#00000000"
                 >
 
                 <LinearLayout
@@ -74,6 +77,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="#00000000"
                     >
 
                     <ImageButton
@@ -101,6 +105,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="#00000000"
                     >
 
                     <ImageButton
@@ -128,6 +133,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:background="#00000000"
                     >
 
                     <ImageButton
@@ -162,6 +168,7 @@
             android:layout_marginBottom="20dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:background="#00000000"
             >
 
             <LinearLayout
@@ -170,6 +177,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:background="#00000000"
                 >
 
                 <ImageButton
@@ -197,6 +205,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:background="#00000000"
                 >
 
                 <ImageButton
