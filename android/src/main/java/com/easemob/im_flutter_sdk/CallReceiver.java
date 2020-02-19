@@ -43,7 +43,7 @@ public class CallReceiver extends BroadcastReceiver implements EMWrapper {
 		String type = intent.getStringExtra("type");
 		Map<String, Object> data = new HashMap<String, Object>();
 		System.out.println("type: " + type);
-		if ("VIDEO".equals(type)) {
+		if ("video".equals(type)) {
 
 			// 跳转至视频通话页面
 			Intent newIntent = new Intent()

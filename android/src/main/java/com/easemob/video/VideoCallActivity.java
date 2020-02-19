@@ -42,6 +42,8 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
     String username = "";
     String type = "";
 
+    boolean isMute = false;
+
     private AudioManager audioManager;
 
     @Override
@@ -103,7 +105,14 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         //静音
         handMute.setOnClickListener(view -> {
             try {
-                EMClient.getInstance().callManager().pauseVoiceTransfer();
+                if (isMute) {
+                    EMClient.getInstance().callManager().pauseVoiceTransfer();
+                    handMute.setImageResource(R.drawable.em_call_mic_off);
+                } else {
+                    EMClient.getInstance().callManager().resumeVoiceTransfer();
+                    handMute.setImageResource(R.drawable.em_call_mic_on);
+                }
+
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
