@@ -6,12 +6,14 @@
 //
 
 #import "EMClientWrapper.h"
+#import "EMCallManagerVideoWrapper.h"
 #import "EMSDKMethod.h"
 #import "EMChatManagerWrapper.h"
 #import "EMContactManagerWrapper.h"
 #import "EMConversationWrapper.h"
 #import "EMGroupManagerWrapper.h"
 #import "EMChatroomManagerWrapper.h"
+#import "Call/1v1/DemoCallManager.h"
 #import "EMHelper.h"
 
 @interface EMClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -79,6 +81,7 @@
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
     [EMClient.sharedClient addMultiDevicesDelegate:self delegateQueue:nil];
+    [DemoCallManager sharedManager];
     [self registerManagers];
 }
 
@@ -100,6 +103,11 @@
     
     EMChatroomManagerWrapper * chatroomManagerWrapper =[[EMChatroomManagerWrapper alloc] initWithChannelName:EMChannelName(@"em_chat_room_manager")
                                                                                                    registrar:self.flutterPluginRegister];
+    
+    EMCallManagerVideoWrapper * callManagerVideoWrapper = [[EMCallManagerVideoWrapper alloc] initWithChannelName:EMChannelName(@"em_call_manager_v")
+                                                                                                       registrar:self.flutterPluginRegister];
+    
+    
 #pragma clang diagnostic pop
     
 }

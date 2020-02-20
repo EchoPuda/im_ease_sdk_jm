@@ -27,8 +27,6 @@
     return self;
 }
 
-
-
 #pragma mark - FlutterPlugin
 
 - (void)handleMethodCall:(FlutterMethodCall*)call

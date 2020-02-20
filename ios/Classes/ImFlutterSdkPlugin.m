@@ -6,7 +6,7 @@
 #import "EMConversationWrapper.h"
 #import "EMGroupManagerWrapper.h"
 #import "EMChatroomManagerWrapper.h"
-
+#import "EMCallManagerVideoWrapper.h"
 
 @implementation ImFlutterSdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
