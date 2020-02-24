@@ -13,7 +13,6 @@
 #import "EMConversationWrapper.h"
 #import "EMGroupManagerWrapper.h"
 #import "EMChatroomManagerWrapper.h"
-#import "Call/1v1/DemoCallManager.h"
 #import "EMHelper.h"
 
 @interface EMClientWrapper () <EMClientDelegate, EMMultiDevicesDelegate>
@@ -81,7 +80,7 @@
     [EMClient.sharedClient initializeSDKWithOptions:options];
     [EMClient.sharedClient addDelegate:self delegateQueue:nil];
     [EMClient.sharedClient addMultiDevicesDelegate:self delegateQueue:nil];
-    [DemoCallManager sharedManager];
+//    [DemoCallManager sharedManager];
     [self registerManagers];
 }
 
