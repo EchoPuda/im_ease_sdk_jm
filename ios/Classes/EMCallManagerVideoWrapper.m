@@ -8,7 +8,7 @@
 #import "EMCallManagerVideoWrapper.h"
 #import "EMHelper.h"
 #import "EMSDKMethod.h"
-#import "Call/1v1/DemoCallManager.h"
+//#import "Call/1v1/DemoCallManager.h"
 
 @interface EMCallManagerVideoWrapper () <EMCallManagerDelegate>
 @property (nonatomic, strong) EMCallSession *callSession;
@@ -50,9 +50,9 @@
 //
 //    }];
     
-    [[DemoCallManager sharedManager] _makeCallWithUsername:username type:EMCallTypeVideo record:NO mergeStream:NO ext:nil isCustomVideoData:NO completion:^(EMCallSession *aCallSession, EMError *aError) {
-        self.callSession = aCallSession;
-    }];
+//    [[DemoCallManager sharedManager] _makeCallWithUsername:username type:EMCallTypeVideo record:NO mergeStream:NO ext:nil isCustomVideoData:NO completion:^(EMCallSession *aCallSession, EMError *aError) {
+//        self.callSession = aCallSession;
+//    }];
     
     
 }
