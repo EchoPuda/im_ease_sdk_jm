@@ -173,6 +173,108 @@ class EMHelper {
         return message;
     }
 
+    static EMMessage insertMessageToConversation(JSONObject args){
+        EMMessage message = null;
+        try {
+
+            int data_type =args.getInt("type");
+            int data_chatType = args.getInt("chatType");
+            String data_to = args.getString("to");
+            String data_from = args.getString("from");
+
+            emChatType = EMMessage.ChatType.Chat;
+            intToChatType(data_chatType);
+
+            JSONObject data_body = args.getJSONObject("body");
+            switch(data_type){
+                case 0:
+                    message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+                    String content = data_body.getString("message");
+                    EMTextMessageBody body = new EMTextMessageBody(content);
+                    message.addBody(body);
+                    message.setFrom(data_from);
+                    setCurrency(message,emChatType,data_to);
+                    setExt(args,message);
+                    break;
+                case 1:
+                    message = EMMessage.createSendMessage(Type.IMAGE);
+                    String localUrl = data_body.getString("localUrl");
+                    File imageFile = new File(localUrl);
+                    if (imageFile.exists()){
+                        EMImageMessageBody imageMessageBody = new EMImageMessageBody(imageFile);
+                        message.addBody(imageMessageBody);
+                        message.setFrom(data_from);
+                        setCurrency(message,emChatType,data_to);
+                    }
+                    setExt(args,message);
+                    break;
+                case 2:
+                    message = EMMessage.createSendMessage(Type.VIDEO);
+                    String videoUrl = data_body.getString("localUrl");
+                    int videoDuration = data_body.getInt("videoDuration");
+                    String fileLength = data_body.getString("fileLength");
+                    File videoFile = new File(videoUrl);
+                    message.setFrom(data_from);
+                    if (videoFile.exists()){
+                        EMVideoMessageBody videoMessageBody = new EMVideoMessageBody(videoUrl,getThumbBitmap(videoUrl),videoDuration,Integer.parseInt(fileLength));
+                        message.addBody(videoMessageBody);
+                        setCurrency(message,emChatType,data_to);
+                    }
+                    setExt(args,message);
+                    break;
+                case 3:
+                    message = EMMessage.createSendMessage(Type.LOCATION);
+                    String address = data_body.getString("address");
+                    double latitude = data_body.getDouble("latitude");
+                    double longitude = data_body.getDouble("longitude");
+                    EMLocationMessageBody emLocationMessageBody = new EMLocationMessageBody(address, latitude, longitude);
+                    message.addBody(emLocationMessageBody);
+                    message.setFrom(data_from);
+                    setCurrency(message,emChatType,data_to);
+                    setExt(args,message);
+                    break;
+                case 4:
+                    message = EMMessage.createSendMessage(Type.VOICE);
+                    String voiceUrl = data_body.getString("localUrl");
+                    int voiceDuration = data_body.getInt("voiceDuration");
+                    File voiceFile = new File(voiceUrl);
+                    message.setFrom(data_from);
+                    if (voiceFile.exists()){
+                        EMVoiceMessageBody videoMessageBody = new EMVoiceMessageBody(voiceFile,voiceDuration);
+                        message.addBody(videoMessageBody);
+                        setCurrency(message,emChatType,data_to);
+                    }
+                    setExt(args,message);
+                    break;
+                case 5:
+                    message = EMMessage.createSendMessage(Type.FILE);
+                    String fileUrl = data_body.getString("localUrl");
+                    File file = new File(fileUrl);
+                    message.setFrom(data_from);
+                    if (file.exists()){
+                        EMNormalFileMessageBody fileMessageBody = new EMNormalFileMessageBody(file);
+                        message.addBody(fileMessageBody);
+                        setCurrency(message,emChatType,data_to);
+                    }
+                    setExt(args,message);
+                    break;
+                case 6:
+                    message = EMMessage.createSendMessage(Type.CMD);
+                    String action = data_body.getString("action");
+                    EMCmdMessageBody cmdMessageBody = new EMCmdMessageBody(action);
+                    message.addBody(cmdMessageBody);
+                    message.setFrom(data_from);
+                    setCurrency(message,emChatType,data_to);
+                    setExt(args,message);
+                    break;
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return message;
+    }
+
     private static void setExt(JSONObject args, EMMessage message){
         try {
             if (null != args.getJSONObject("attributes")){
