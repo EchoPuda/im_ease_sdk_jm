@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (EMMessage *)updateDataMapToMessage:(NSDictionary *)args;
 
++ (EMMessage *)insertMessageToConversation:(NSDictionary *)args;
+
 + (NSDictionary *)messageToDictionary:(EMMessage *)aMessage;
 
 + (NSArray *)dictionariesToMessages:(NSArray *)dicts;

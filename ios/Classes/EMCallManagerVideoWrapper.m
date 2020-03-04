@@ -9,6 +9,9 @@
 #import "EMHelper.h"
 #import "EMSDKMethod.h"
 //#import "Call/1v1/DemoCallManager.h"
+//#import "Call/1v1/DemoCallManager.h"
+//#import "DemoCallManager.h"
+
 
 @interface EMCallManagerVideoWrapper () <EMCallManagerDelegate>
 @property (nonatomic, strong) EMCallSession *callSession;
@@ -29,7 +32,7 @@
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
     if ([@"makeVideoCall" isEqualToString:call.method]) {
-        
+        [self makeVideoCall:call.arguments result:result];
     } else {
         [super handleMethodCall:call result:result];
     }

@@ -199,6 +199,26 @@
     return aMessage;
 }
 
++ (EMMessage *)insertMessageToConversation:(NSDictionary *)args {
+
+    NSDictionary *msgBodyDict = args[@"body"];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:msgBodyDict[@"message"]];
+    NSString *from = args[@"from"];
+    NSString *to = args[@"to"];
+    NSDictionary *ext = args[@"attributes"];
+    
+    EMMessage *message = [[EMMessage alloc] initWithConversationID:from from:from to:to body:body ext:ext];
+    EMChatType chatType;
+    if ([args[@"chatType"] isKindOfClass:[NSNull class]]) {
+        chatType = EMChatTypeChat;
+    }else {
+        chatType = (EMChatType)[args[@"chatType"] intValue];
+    }
+    message.chatType = chatType;
+    return message;
+    
+}
+
 + (NSDictionary *)messageToDictionary:(EMMessage *)aMessage {
 
     NSMutableDictionary *ret = [NSMutableDictionary dictionary];
