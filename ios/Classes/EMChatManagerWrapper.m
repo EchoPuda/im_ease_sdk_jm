@@ -77,6 +77,9 @@
         [self getCursor:call.arguments result:result];
     }
     
+    else if ([@"addMessageListener" isEqualToString:call.method]) {
+        [self getCursor:call.arguments result:result];
+    }
     else if ([@"makeVoiceCall" isEqualToString:call.method]) {
         [self makeVoiceCall:call.arguments result:result];
     } else if ([@"answerCall" isEqualToString:call.method]) {
