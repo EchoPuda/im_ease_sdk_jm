@@ -44,7 +44,7 @@ class EMChatManager {
          message.status = EMMessage.from(response['message']).status;
         if (onSuccess != null) onSuccess();
       } else {
-        print("消息发送：" + response["success"].toString());
+//        print("消息发送：" + response["success"].toString());
         if (onError != null) {
           onError(response['code'], response['desc']);
         }

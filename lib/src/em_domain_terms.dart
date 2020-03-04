@@ -241,7 +241,7 @@ class EMOptions {
     map.putIfAbsent("serverTransfer", () => _serverTransfer);
     map.putIfAbsent("isAutoDownload", () => _isAutoDownload);
     map.putIfAbsent("pushConfig", () => _pushConfig.convertToMap());
-    print(map);
+//    print(map);
     return map;
   }
 }

@@ -215,6 +215,7 @@
         chatType = (EMChatType)[args[@"chatType"] intValue];
     }
     message.chatType = chatType;
+    
     return message;
     
 }

@@ -290,7 +290,10 @@ public class EMConversationWrapper implements MethodCallHandler, EMWrapper{
             JSONObject argMap = (JSONObject) args;
             String id = argMap.getString("id");
             EMMessage message = EMHelper.insertMessageToConversation((JSONObject) argMap.get("msg"));
-            getConversation(id).insertMessage(message);
+            if (message != null) {
+                getConversation(id).insertMessage(message);
+            }
+
         }catch (JSONException e){
             EMLog.e("JSONException", e.getMessage());
         }
@@ -301,7 +304,9 @@ public class EMConversationWrapper implements MethodCallHandler, EMWrapper{
             JSONObject argMap = (JSONObject) args;
             String id = argMap.getString("id");
             EMMessage message = EMHelper.insertMessageToConversation((JSONObject)argMap.get("msg"));
-            getConversation(id).appendMessage(message);
+            if (message != null){
+                getConversation(id).appendMessage(message);
+            }
         }catch (JSONException e){
             EMLog.e("JSONException", e.getMessage());
         }
