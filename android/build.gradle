@@ -58,8 +58,8 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
     // Google firebase cloud messaging
-    implementation 'com.google.android.gms:play-services-base:17.0.0'
-    implementation 'com.google.firebase:firebase-messaging:17.0.0'
+//    implementation 'com.google.android.gms:play-services-base:17.0.0'
+//    implementation 'com.google.firebase:firebase-messaging:17.0.0'
     implementation 'com.hyphenate:hyphenate-sdk:3.6.1'
 
 //    implementation 'cn.jiguang.sdk:jpush:3.3.4'

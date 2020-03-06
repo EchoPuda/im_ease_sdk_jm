@@ -43,6 +43,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @SuppressWarnings("unchecked")
 class EMHelper {
@@ -176,25 +177,33 @@ class EMHelper {
     static EMMessage insertMessageToConversation(JSONObject args){
 
         try {
-            EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
 
             int data_type =args.getInt("type");
             int data_chatType = args.getInt("chatType");
+            int direction = args.getInt("direction");
             String data_to = args.getString("to");
             String data_from = args.getString("from");
 
             emChatType = EMMessage.ChatType.Chat;
             intToChatType(data_chatType);
 
+            EMMessage message;
+            //暂时只支持插入文本
+            if (direction == 0) {
+                message = EMMessage.createSendMessage(EMMessage.Type.TXT);
+                message.setTo(data_to);
+            } else {
+                message = EMMessage.createReceiveMessage(EMMessage.Type.TXT);
+                message.setFrom(data_from);
+            }
+
             JSONObject data_body = args.getJSONObject("body");
-
             String content = data_body.getString("message");
-
             EMTextMessageBody body = new EMTextMessageBody(content);
             message.addBody(body);
-            message.setFrom(data_from);
-            message.setTo(data_to);
-            message.setChatType(EMMessage.ChatType.Chat);
+
+            message.setChatType(emChatType);
+            message.setMsgId(UUID.randomUUID().toString());
 
             return message;
 
