@@ -335,7 +335,8 @@ static NSString *callId = @"";
 - (void)makeVoiceCall:(NSDictionary *)param result:(FlutterResult)result {
     NSString *username = param[@"username"];
     [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:username ext:nil completion:^(EMCallSession *aCakkSession, EMError *aError) {
-        
+        callSession = aCakkSession;
+        callId = aCakkSession.callId;
     }];
 }
 
