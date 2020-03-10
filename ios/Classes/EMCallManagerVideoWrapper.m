@@ -11,7 +11,7 @@
 //#import "Call/1v1/DemoCallManager.h"
 //#import "Call/1v1/DemoCallManager.h"
 //#import "DemoCallManager.h"
-
+#import "DemoCallManager.h"
 
 @interface EMCallManagerVideoWrapper () <EMCallManagerDelegate>
 @property (nonatomic, strong) EMCallSession *callSession;
@@ -42,22 +42,20 @@
     NSString *username = param[@"username"];
     
 //    [[EMClient sharedClient].callManager startCall:EMCallTypeVideo remoteName:username record:NO mergeStream:NO ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
-//        self.callSession = aCallSession;
-//
-//        CallViewController *callView = [[CallViewController alloc] init];
-//        if (callView) {
-//            UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-//            UIViewController *rootViewController = window.rootViewController;
-//            [rootViewController presentViewController:callView animated:YES completion:nil];
-//        }
 //
 //    }];
     
-//    [[DemoCallManager sharedManager] _makeCallWithUsername:username type:EMCallTypeVideo record:NO mergeStream:NO ext:nil isCustomVideoData:NO completion:^(EMCallSession *aCallSession, EMError *aError) {
-//        self.callSession = aCallSession;
-//    }];
+    [[DemoCallManager sharedManager] _makeCallWithUsername:username type:EMCallTypeVideo record:NO mergeStream:NO ext:nil isCustomVideoData:NO completion:^(EMCallSession *aCallSession, EMError *aError) {
+        self.callSession = aCallSession;
+    }];
     
     
 }
+
+- (void)receiveVoidoCall:(EMCallSession *)aSession{
+    [[DemoCallManager sharedManager] _gotoVideoCall:aSession];
+}
+
+
 
 @end

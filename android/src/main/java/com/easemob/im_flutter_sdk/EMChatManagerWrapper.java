@@ -180,6 +180,7 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
                     }
                     break;
                 case DISCONNECTED: // 电话断了
+                    setAudioNormal();
                     switch (error) {
                         case REJECTED: //拒接
                             post((Void)->{
@@ -419,111 +420,10 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
      * 注册通话状态监听
      */
     private void addCallStateChangeListener(Object args, Result result) {
-        Log.d(TAG, "addCallStateChangeListener: ---------------------------------------");
-        audioManager = (AudioManager) registrar.activity().getSystemService(Context.AUDIO_SERVICE);
-        callStateListener = (callState, error) -> {
-            System.out.println("当前通话状态：" + callState.toString());
-            switch (callState) {
-                case CONNECTING: // 正在连接对方
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 1);
-                    });
-                    break;
-                case CONNECTED: // 双方已经建立连接
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 2);
-                    });
-                    break;
 
-                case ACCEPTED: // 电话接通成功
-                    closeSpeakerOn();
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 0);
-                    });
-                    PhoneStateManager.get(registrar.activity()).addStateCallback(phoneStateCallback);
-                    try {
-                        callManager.resumeVoiceTransfer();
-                    } catch (HyphenateException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case DISCONNECTED: // 电话断了
-                    switch (error) {
-                        case REJECTED: //拒接
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -3);
-                            });
-                            break;
-                        case ERROR_UNAVAILABLE: //对方不在线
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -4);
-                            });
-                            break;
-                        case ERROR_TRANSPORT: //连接失败
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -5);
-                            });
-                            break;
-                        case ERROR_NORESPONSE: //无人接听
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -6);
-                            });
-                            break;
-                        case ERROR_BUSY: //对方正忙
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -7);
-                            });
-                            break;
-                        default:
-                            post((Void)->{
-                                channel.invokeMethod("onCallState", -8);
-                            });
-                            break;
-                    }
-                    PhoneStateManager.get(registrar.activity()).removeStateCallback(phoneStateCallback);
-                    break;
-                case NETWORK_UNSTABLE: //网络不稳定
-                    if(error == EMCallStateChangeListener.CallError.ERROR_NO_DATA){
-                        //无通话数据
-                        post((Void)->{
-                            channel.invokeMethod("onCallState", -2);
-                        });
-                    }else{
-                        post((Void)->{
-                            channel.invokeMethod("onCallState", -2);
-                        });
-                    }
-                    break;
-                case NETWORK_NORMAL: //网络恢复正常
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 3);
-                    });
-                    break;
-                case RINGING: //正在拨入
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 4);
-                    });
-                    break;
-                case ANSWERING: //正在接听
-                    post((Void)->{
-                        channel.invokeMethod("onCallState", 5);
-                    });
-                    break;
-                default:
-                    break;
-            }
-
-        };
-        callManager.addCallStateChangeListener(callStateListener);
     }
 
     private void removeCallStateChangeListener(Object args, Result result) {
-        audioManager.setMode(AudioManager.MODE_NORMAL);
-        audioManager.setMicrophoneMute(false);
-
-        if(callStateListener != null) {
-            callManager.removeCallStateChangeListener(callStateListener);
-        }
 
     }
 
@@ -554,6 +454,18 @@ public class EMChatManagerWrapper implements MethodCallHandler, EMWrapper{
                 }
                 audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
 
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setAudioNormal() {
+        try {
+            if (audioManager != null) {
+                audioManager.setMicrophoneMute(false);
+                audioManager.setMode(AudioManager.MODE_NORMAL);
             }
 
         } catch (Exception e) {

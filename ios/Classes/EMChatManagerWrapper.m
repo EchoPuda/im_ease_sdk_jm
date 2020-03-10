@@ -8,6 +8,7 @@
 #import "EMChatManagerWrapper.h"
 #import "EMSDKMethod.h"
 #import "EMHelper.h"
+#import "EMCallManagerVideoWrapper.h"
 
 @interface EMChatManagerWrapper () <EMChatManagerDelegate, EMCallManagerDelegate> {
     FlutterEventSink _progressEventSink;
@@ -408,7 +409,17 @@ static EMCallSession *callSession = nil;
     }
     if (aSession.remoteName != NULL) {
         callId = aSession.callId;
-        [self.channel invokeMethod:@"onCallReceive" arguments:@{@"from":aSession.remoteName}];
+        NSString *type;
+        if (aSession.type == EMCallTypeVideo) {
+            type = @"video";
+//            [[EMCallManagerVideoWrapper self] receiveVoidoCall:aSession];
+            EMCallManagerVideoWrapper *wrap = [[EMCallManagerVideoWrapper alloc] init];
+            [wrap receiveVoidoCall:aSession];
+        } else {
+            type = @"voice";
+            [self.channel invokeMethod:@"onCallReceive" arguments:@{@"from":aSession.remoteName,@"type":type}];
+        }
+
     }
 }
 

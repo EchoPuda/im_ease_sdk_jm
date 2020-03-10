@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EMCallManagerVideoWrapper : EMWrapper
-
+- (void)receiveVoidoCall:(EMCallSession *)aSession;
 @end
 
 NS_ASSUME_NONNULL_END

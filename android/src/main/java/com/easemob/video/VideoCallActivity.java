@@ -46,6 +46,8 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
 
     private AudioManager audioManager;
 
+    boolean localView = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,10 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         oppositeSurface = (EMCallSurfaceView) findViewById(R.id.oppositeSurface);
 
         handTip = (TextView) findViewById(R.id.hand_tip);
+
+        localSurface.setOnClickListener(view -> {
+            changeSurface();
+        });
 
         //静音
         handMute.setOnClickListener(view -> {
@@ -165,7 +171,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         wm.getDefaultDisplay().getMetrics(dm);
         System.out.println("width:" + dm.widthPixels);
         System.out.println("width:" + dm.heightPixels);
-        EMClient.getInstance().callManager().getCallOptions().setVideoResolution(640,1080);
+        EMClient.getInstance().callManager().getCallOptions().setVideoResolution(0,0);
     }
 
     /**
@@ -197,11 +203,34 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         }
     }
 
+    private void setAudioNormal() {
+        try {
+            if (audioManager != null) {
+                audioManager.setMicrophoneMute(false);
+                audioManager.setMode(AudioManager.MODE_NORMAL);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 连通视频
      */
     void connectSurface() {
         EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
+    }
+
+    void changeSurface() {
+        if (localView) {
+            localView = false;
+            EMClient.getInstance().callManager().setSurfaceView(oppositeSurface,localSurface);
+        } else {
+            localView = true;
+            EMClient.getInstance().callManager().setSurfaceView(localSurface,oppositeSurface);
+        }
+
     }
 
     /**
@@ -266,6 +295,7 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
                     setTip("通话已结束");
                     finishVideo();
                 }
+                setAudioNormal();
                 break;
             case NETWORK_UNSTABLE: //网络不稳定
                 if(error == CallError.ERROR_NO_DATA){
