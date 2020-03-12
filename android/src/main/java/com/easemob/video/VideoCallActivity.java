@@ -106,12 +106,13 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         oppositeSurface = (EMCallSurfaceView) findViewById(R.id.oppositeSurface);
 
         oppositeSurface.setScaleMode(VideoView.EMCallViewScaleMode.EMCallViewScaleModeAspectFill);
+        localSurface.setScaleMode(VideoView.EMCallViewScaleMode.EMCallViewScaleModeAspectFill);
 
         handTip = (TextView) findViewById(R.id.hand_tip);
 
-        localSurface.setOnClickListener(view -> {
-            changeSurface();
-        });
+//        localSurface.setOnClickListener(view -> {
+//            changeSurface();
+//        });
 
         //静音
         handMute.setOnClickListener(view -> {
