@@ -22,6 +22,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.EMNoActiveCallException;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.media.EMCallSurfaceView;
+import com.superrtc.sdk.VideoView;
 
 public class VideoCallActivity extends AppCompatActivity implements EMCallStateChangeListener {
 
@@ -104,11 +105,13 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
         localSurface = (EMCallSurfaceView) findViewById(R.id.localSurface);
         oppositeSurface = (EMCallSurfaceView) findViewById(R.id.oppositeSurface);
 
+        oppositeSurface.setScaleMode(VideoView.EMCallViewScaleMode.EMCallViewScaleModeAspectFill);
+
         handTip = (TextView) findViewById(R.id.hand_tip);
 
-//        localSurface.setOnClickListener(view -> {
-//            changeSurface();
-//        });
+        localSurface.setOnClickListener(view -> {
+            changeSurface();
+        });
 
         //静音
         handMute.setOnClickListener(view -> {

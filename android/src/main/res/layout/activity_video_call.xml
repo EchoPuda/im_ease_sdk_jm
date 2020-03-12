@@ -31,7 +31,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:background="#00000000"
+            android:background="#000000"
             android:gravity="center"
             >
 
@@ -83,8 +83,8 @@
 
                     <ImageButton
                         android:id="@+id/hand_mute"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:src="@drawable/em_call_mic_on"
                         android:background="#00000000"
                         />
@@ -111,8 +111,8 @@
 
                     <ImageButton
                         android:id="@+id/hand_out"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:src="@drawable/em_call_hangup"
                         android:background="#00000000"
                         />
@@ -139,8 +139,8 @@
 
                     <ImageButton
                         android:id="@+id/hand_switch"
-                        android:layout_width="65dp"
-                        android:layout_height="65dp"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
                         android:src="@drawable/em_call_camera_toggle"
                         android:background="#00000000"
                         />
@@ -183,8 +183,8 @@
 
                 <ImageButton
                     android:id="@+id/hand_refuse"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:src="@drawable/em_call_hangup"
                     android:background="#00000000"
                     />
@@ -211,8 +211,8 @@
 
                 <ImageButton
                     android:id="@+id/hand_answer"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
                     android:src="@drawable/em_call_pickup"
                     android:background="#00000000"
                     />
