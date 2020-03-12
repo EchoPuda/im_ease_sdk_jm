@@ -39,6 +39,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIImage *)getUiImage:(NSString*) name{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSURL *bundleUrl = [bundle URLForResource:@"MyLibrary" withExtension:@"bundle"];
+    
+    NSBundle *myBundle = [NSBundle bundleWithURL:bundleUrl];
+    
+    UIImage *mImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",name,@"@2x"] inBundle:myBundle compatibleWithTraitCollection:nil];
+    
+    return mImage;
+}
+
 #pragma mark - Subviews
 
 - (void)_setupSubviews
@@ -59,8 +72,8 @@
     EMButton *videoButton = [[EMButton alloc] initWithTitle:@"视频" target:self action:@selector(videoButtonAction:)];
     [videoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [videoButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
-    [videoButton setImage:[UIImage imageNamed:@"video_white"] forState:UIControlStateNormal];
-    [videoButton setImage:[UIImage imageNamed:@"video_gray"] forState:UIControlStateSelected];
+    [videoButton setImage:[self getUiImage:@"video_white"] forState:UIControlStateNormal];
+    [videoButton setImage:[self getUiImage:@"video_gray"] forState:UIControlStateSelected];
     [self.view addSubview:videoButton];
     [videoButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(padding);
@@ -70,8 +83,8 @@
     
     [self.microphoneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.microphoneButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
-    [self.microphoneButton setImage:[UIImage imageNamed:@"micphone_white"] forState:UIControlStateNormal];
-    [self.microphoneButton setImage:[UIImage imageNamed:@"micphone_gray"] forState:UIControlStateSelected];
+    [self.microphoneButton setImage:[self getUiImage:@"micphone_white"] forState:UIControlStateNormal];
+    [self.microphoneButton setImage:[self getUiImage:@"micphone_gray"] forState:UIControlStateSelected];
     [self.microphoneButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.view).offset(padding);
         make.bottom.equalTo(self.hangupButton.mas_top).offset(-40);
@@ -80,8 +93,8 @@
     self.switchCameraButton = [[EMButton alloc] initWithTitle:@"切换摄像头" target:self action:@selector(switchCameraButtonAction:)];
     [self.switchCameraButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.switchCameraButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
-    [self.switchCameraButton setImage:[UIImage imageNamed:@"switchCamera_white"] forState:UIControlStateNormal];
-    [self.switchCameraButton setImage:[UIImage imageNamed:@"switchCamera_gray"] forState:UIControlStateSelected];
+    [self.switchCameraButton setImage:[self getUiImage:@"switchCamera_white"] forState:UIControlStateNormal];
+    [self.switchCameraButton setImage:[self getUiImage:@"switchCamera_gray"] forState:UIControlStateSelected];
     [self.view addSubview:self.switchCameraButton];
     [self.switchCameraButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.microphoneButton.mas_right).offset(padding);
@@ -90,8 +103,8 @@
     
     [self.speakerButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.speakerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    [self.speakerButton setImage:[UIImage imageNamed:@"speaker_gray"] forState:UIControlStateNormal];
-    [self.speakerButton setImage:[UIImage imageNamed:@"speaker_white"] forState:UIControlStateSelected];
+    [self.speakerButton setImage:[self getUiImage:@"speaker_gray"] forState:UIControlStateNormal];
+    [self.speakerButton setImage:[self getUiImage:@"speaker_white"] forState:UIControlStateSelected];
     [self.speakerButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.switchCameraButton.mas_right).offset(padding);
         make.bottom.equalTo(videoButton);

@@ -30,6 +30,18 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIImage *)getUiImage:(NSString*) name{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSURL *bundleUrl = [bundle URLForResource:@"MyLibrary" withExtension:@"bundle"];
+    
+    NSBundle *myBundle = [NSBundle bundleWithURL:bundleUrl];
+    
+    UIImage *mImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",name,@"@2x"] inBundle:myBundle compatibleWithTraitCollection:nil];
+    
+    return mImage;
+}
+
 #pragma mark - Subviews
 
 - (void)_setupSubviews
@@ -54,7 +66,7 @@
         make.bottom.equalTo(self.microphoneButton.mas_top).offset(-40);
     }];
     
-    self.floatingView.bgView.image = [UIImage imageNamed:@"floating_voice"];
+    self.floatingView.bgView.image = [self getUiImage:@"floating_voice"];
     self.floatingView.bgView.layer.borderWidth = 0;
     self.floatingView.isLockedBgView = YES;
 }

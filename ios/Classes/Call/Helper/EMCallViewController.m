@@ -40,6 +40,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (UIImage *)getUiImage:(NSString*) name{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSURL *bundleUrl = [bundle URLForResource:@"MyLibrary" withExtension:@"bundle"];
+    
+    NSBundle *myBundle = [NSBundle bundleWithURL:bundleUrl];
+    
+    UIImage *mImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",name,@"@2x"] inBundle:myBundle compatibleWithTraitCollection:nil];
+    
+    return mImage;
+}
+
 #pragma mark - Subviews
 
 - (void)_setupCallControllerSubviews
@@ -57,23 +70,23 @@
     
     self.microphoneButton = [[EMButton alloc] initWithTitle:@"麦克风" target:self action:@selector(microphoneButtonAction)];
     [self.microphoneButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.microphoneButton setImage:[UIImage imageNamed:@"micphone_gray"] forState:UIControlStateNormal];
+    [self.microphoneButton setImage:[self getUiImage:@"micphone_gray"] forState:UIControlStateNormal];
     [self.microphoneButton setTitleColor:[UIColor grayColor] forState:UIControlStateSelected];
-    [self.microphoneButton setImage:[UIImage imageNamed:@"micphone_gray"] forState:UIControlStateSelected];
+    [self.microphoneButton setImage:[self getUiImage:@"micphone_gray"] forState:UIControlStateSelected];
     [self.view addSubview:self.microphoneButton];
 //    self.microphoneButton.hidden = YES;
     
     self.speakerButton = [[EMButton alloc] initWithTitle:@"扬声器" target:self action:@selector(speakerButtonAction)];
     [self.speakerButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [self.speakerButton setImage:[UIImage imageNamed:@"speaker_gray"] forState:UIControlStateNormal];
+    [self.speakerButton setImage:[self getUiImage:@"speaker_gray"] forState:UIControlStateNormal];
     [self.speakerButton setTitleColor:[UIColor blackColor] forState:UIControlStateSelected];
-    [self.speakerButton setImage:[UIImage imageNamed:@"speaker_gray"] forState:UIControlStateSelected];
+    [self.speakerButton setImage:[self getUiImage:@"speaker_gray"] forState:UIControlStateSelected];
     [self.view addSubview:self.speakerButton];
     self.speakerButton.hidden = YES;
     
     self.minButton = [[UIButton alloc] init];
     self.minButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.minButton setImage:[UIImage imageNamed:@"minimize_white"] forState:UIControlStateNormal];
+    [self.minButton setImage:[self getUiImage:@"minimize_white"] forState:UIControlStateNormal];
     [self.minButton addTarget:self action:@selector(minimizeAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.minButton];
     [self.minButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -84,7 +97,7 @@
     
     self.hangupButton = [[UIButton alloc] init];
     self.hangupButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.hangupButton setImage:[UIImage imageNamed:@"hangup"] forState:UIControlStateNormal];
+    [self.hangupButton setImage:[self getUiImage:@"hangup"] forState:UIControlStateNormal];
     [self.hangupButton addTarget:self action:@selector(hangupAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.hangupButton];
 }

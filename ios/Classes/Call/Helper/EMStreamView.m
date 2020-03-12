@@ -28,7 +28,7 @@
         self.bgView.userInteractionEnabled = YES;
         self.bgView.layer.borderWidth = 0.5;
         self.bgView.layer.borderColor = [UIColor grayColor].CGColor;
-        self.bgView.image = [UIImage imageNamed:@"bg_connecting"];
+        self.bgView.image = [self getUiImage:@"bg_connecting"];
         [self addSubview:self.bgView];
         [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.equalTo(self);
@@ -63,6 +63,19 @@
     }
     
     return self;
+}
+
+- (UIImage *)getUiImage:(NSString*) name{
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSURL *bundleUrl = [bundle URLForResource:@"MyLibrary" withExtension:@"bundle"];
+    
+    NSBundle *myBundle = [NSBundle bundleWithURL:bundleUrl];
+    
+    UIImage *mImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",name,@"@2x"] inBundle:myBundle compatibleWithTraitCollection:nil];
+    
+    return mImage;
 }
 
 - (void)setStatus:(StreamStatus)status

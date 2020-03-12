@@ -106,9 +106,9 @@ public class VideoCallActivity extends AppCompatActivity implements EMCallStateC
 
         handTip = (TextView) findViewById(R.id.hand_tip);
 
-        localSurface.setOnClickListener(view -> {
-            changeSurface();
-        });
+//        localSurface.setOnClickListener(view -> {
+//            changeSurface();
+//        });
 
         //静音
         handMute.setOnClickListener(view -> {

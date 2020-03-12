@@ -10,6 +10,7 @@
 #import "EMGlobalVariables.h"
 #import "UIViewController+HUD.h"
 #import "Masonry.h"
+#import "EMStreamView.h"
 
 @interface EM1v1CallViewController ()
 
@@ -42,7 +43,7 @@
     self.timeLabel.hidden = YES;
     self.answerButton.enabled = NO;
     self.callStatus = self.callSession.status;
-    [self.waitImgView startAnimating];
+//    [self.waitImgView startAnimating];
     [self floatingView];//初始化视频小窗
     //监测耳机状态，如果是插入耳机状态，不显示扬声器按钮
     self.speakerButton.hidden = isHeadphone();
@@ -64,6 +65,18 @@
     
     [_floatingView removeFromSuperview];
     _floatingView = nil;
+}
+
+- (UIImage *)getUiImage:(NSString*)name{
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    
+    NSURL *bundleUrl = [bundle URLForResource:@"MyLibrary" withExtension:@"bundle"];
+    
+    NSBundle *myBundle = [NSBundle bundleWithURL:bundleUrl];
+    
+    UIImage *mImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",name,@"@2x"] inBundle:myBundle compatibleWithTraitCollection:nil];
+    
+    return mImage;
 }
 
 #pragma mark - Subviews
@@ -100,19 +113,19 @@
     }];
 //    self.remoteNameLabel.hidden = YES;
     
-    self.waitImgView = [[UIImageView alloc] init];
-    self.waitImgView.contentMode = UIViewContentModeScaleAspectFit;
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for (int i = 25; i < 88; i++) {
-        NSString *name = [[NSString alloc] initWithFormat:@"animate_000%@.png", @(i)];
-//        [array addObject:[UIImage imageNamed:name]];
-    }
-    [self.waitImgView setAnimationImages:array];
-    [self.view addSubview:self.waitImgView];
-    [self.waitImgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).offset(20);
-        make.right.equalTo(self.view).offset(-20);
-    }];
+//    self.waitImgView = [[UIImageView alloc] init];
+//    self.waitImgView.contentMode = UIViewContentModeScaleAspectFit;
+//    NSMutableArray *array = [[NSMutableArray alloc] init];
+//    for (int i = 25; i < 88; i++) {
+//        NSString *name = [[NSString alloc] initWithFormat:@"animate_000%@.png", @(i)];
+////        [array addObject:[UIImage imageNamed:name]];
+//    }
+//    [self.waitImgView setAnimationImages:array];
+//    [self.view addSubview:self.waitImgView];
+//    [self.waitImgView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(self.view).offset(20);
+//        make.right.equalTo(self.view).offset(-20);
+//    }];
     
     [self.minButton setImage:[UIImage imageNamed:@"minimize_gray"] forState:UIControlStateNormal];
     [self.minButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -140,7 +153,7 @@
         
         self.answerButton = [[UIButton alloc] init];
         self.answerButton.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self.answerButton setImage:[UIImage imageNamed:@"answer"] forState:UIControlStateNormal];
+        [self.answerButton setImage:[self getUiImage:@"answer"] forState:UIControlStateNormal];
         [self.answerButton addTarget:self action:@selector(answerAction) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:self.answerButton];
         [self.answerButton mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -291,7 +304,7 @@
             self.statusLabel.text = @"通话中...";
             self.statusLabel.hidden = YES;
 //            self.timeLabel.hidden = NO;
-            [self.waitImgView stopAnimating];
+//            [self.waitImgView stopAnimating];
             if (!self.callSession.isCaller) {
                 [self.answerButton removeFromSuperview];
                 [self.hangupButton mas_remakeConstraints:^(MASConstraintMaker *make) {
